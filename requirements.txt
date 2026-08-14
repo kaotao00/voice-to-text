@@ -1,0 +1,9 @@
+# 推荐 Python 3.10 - 3.12
+# numpy 使用范围而非精确版本：精确锁定 1.24.3 在 Python 3.12+ 上
+# 没有预编译 wheel，会触发源码编译并失败
+faster-whisper==1.0.3
+sounddevice==0.4.6
+numpy>=1.24.3,<2.3
+keyboard==0.13.5
+pyperclip==1.8.2
+opencc-python-reimplemented==0.1.7
