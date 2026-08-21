@@ -31,6 +31,8 @@ docker compose -f docker-compose.yml -f docker-compose.device.yml up -d --build
 docker compose up -d --build
 ```
 
+若服务器没有 Docker Compose，可使用 `bash deploy-server.sh`。
+
 服务器本身通常不具备会议室麦克风，因而仅适合查看记录与演示；会议室实际采集场景应让硬件终端使用包含 `docker-compose.device.yml` 的命令运行服务。
 
 `pages/` 是 GitHub Pages 产品介绍页。GitHub Pages 是静态 HTTPS 页面，不能安全地直接访问局域网 HTTP 设备接口；录音与会议详情应从设备 IP 打开的本地页面使用。
