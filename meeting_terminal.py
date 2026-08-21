@@ -314,6 +314,16 @@ def start_device_recording(meeting_id: str):
     return jsonify({"status": "recording"})
 
 
+@app.post("/api/meetings/<meeting_id>/browser-recording/start")
+def start_browser_recording(meeting_id: str):
+    with db() as connection:
+        meeting = connection.execute("SELECT id FROM meetings WHERE id = ?", (meeting_id,)).fetchone()
+        if not meeting:
+            abort(404)
+        connection.execute("UPDATE meetings SET status = 'recording' WHERE id = ?", (meeting_id,))
+    return jsonify({"status": "recording"})
+
+
 @app.post("/api/meetings/<meeting_id>/device-recording/stop")
 def stop_device_recording(meeting_id: str):
     try:
