@@ -1,4 +1,6 @@
-FROM python:3.12-slim
+# Docker Hub is often unavailable from mainland server networks; this is a
+# compatible public mirror of the official Python image.
+FROM docker.1panel.live/library/python:3.12-slim
 WORKDIR /app
 COPY meeting-requirements.txt .
 RUN apt-get update && apt-get install -y --no-install-recommends libportaudio2 \
