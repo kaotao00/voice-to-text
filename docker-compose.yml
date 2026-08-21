@@ -1,0 +1,15 @@
+services:
+  meeting-terminal:
+    build: .
+    container_name: meeting-terminal
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    environment:
+      WHISPER_MODEL: base
+      MAX_SPEAKERS: 6
+      MEETING_HOME: /data
+    volumes:
+      - meeting_data:/data
+volumes:
+  meeting_data:

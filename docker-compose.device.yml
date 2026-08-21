@@ -1,0 +1,4 @@
+services:
+  meeting-terminal:
+    devices:
+      - /dev/snd:/dev/snd
