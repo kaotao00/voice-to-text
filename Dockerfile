@@ -2,6 +2,7 @@
 # compatible public mirror of the official Python image.
 FROM docker.1panel.live/library/python:3.12-slim
 WORKDIR /app
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
 COPY meeting-requirements.txt .
 RUN apt-get update && apt-get install -y --no-install-recommends libportaudio2 \
     && rm -rf /var/lib/apt/lists/* \
