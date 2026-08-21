@@ -9,7 +9,12 @@ ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
 COPY meeting-requirements.txt .
 RUN pip install --no-cache-dir -r meeting-requirements.txt
 COPY . .
-ENV MEETING_HOME=/data PORT=8090 WHISPER_MODEL=base
+# Keep the downloaded CPU model in the persistent data volume.  The default
+# Hugging Face endpoint is not reachable from some domestic server networks.
+ENV MEETING_HOME=/data PORT=8090 WHISPER_MODEL=base \
+    HF_HOME=/data/huggingface \
+    HF_ENDPOINT=https://hf-mirror.com \
+    HF_HUB_DISABLE_XET=1
 VOLUME ["/data"]
 EXPOSE 8090
 CMD ["gunicorn", "--workers", "1", "--threads", "4", "--bind", "0.0.0.0:8090", "meeting_terminal:app"]

@@ -223,7 +223,6 @@ def process_meeting(meeting_id: str, audio_path: Path) -> None:
             connection.execute("UPDATE meetings SET status = 'processing' WHERE id = ?", (meeting_id,))
         segments, _ = get_model().transcribe(
             str(audio_path), language="zh", beam_size=5, vad_filter=True,
-            initial_prompt="请使用简体中文输出会议发言内容。",
         )
         utterances = [
             {"start": round(segment.start, 2), "end": round(segment.end, 2),
@@ -238,7 +237,7 @@ def process_meeting(meeting_id: str, audio_path: Path) -> None:
                 [(meeting_id, u["speaker"], u["start"], u["end"], u["text"]) for u in utterances],
             )
             connection.execute(
-                "UPDATE meetings SET status = 'ready', ended_at = ?, duration_seconds = ?, minutes_json = ? WHERE id = ?",
+                "UPDATE meetings SET status = 'ready', ended_at = ?, duration_seconds = ?, minutes_json = ?, error = NULL WHERE id = ?",
                 (now(), wav_duration(audio_path), json.dumps(minutes, ensure_ascii=False), meeting_id),
             )
     except Exception as error:  # Preserve the meeting record for diagnosis.
