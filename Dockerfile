@@ -2,11 +2,11 @@
 # compatible public mirror of the official Python image.
 FROM docker.1panel.live/library/python:3.12-slim
 WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends libportaudio2 \
+    && rm -rf /var/lib/apt/lists/*
 ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
 COPY meeting-requirements.txt .
-RUN apt-get update && apt-get install -y --no-install-recommends libportaudio2 \
-    && rm -rf /var/lib/apt/lists/* \
-    && pip install --no-cache-dir -r meeting-requirements.txt
+RUN pip install --no-cache-dir -r meeting-requirements.txt
 COPY . .
 ENV MEETING_HOME=/data PORT=8090 WHISPER_MODEL=base
 VOLUME ["/data"]
